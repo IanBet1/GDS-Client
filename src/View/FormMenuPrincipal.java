@@ -173,10 +173,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jLabel3.setText("campus Capivari");
 
         jLabel7.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
-        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v0.9.1");
+        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v0.9.2");
         jLabel7.setToolTipText("");
 
-        btnLogoff.setIcon(new javax.swing.ImageIcon("E:\\IFSP\\4º Semestre\\Projeto Interdisciplinar\\Software\\GDS v0.9.1 - Client\\imagens\\logout.png")); // NOI18N
         btnLogoff.setText("Logoff");
         btnLogoff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -273,15 +273,12 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Consolas" size="10" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Software de Gerenciamento de Dep&#xf3;sito de Suprimentos - Desenvolvido para o Instituto Federal de Educa&#xe7;&#xe3;o, Ci&#xea;ncia e Tecnologia de S&#xe3;o Paulo - campus Capivari - v0.9.1"/>
+        <Property name="text" type="java.lang.String" value="Software de Gerenciamento de Dep&#xf3;sito de Suprimentos - Desenvolvido para o Instituto Federal de Educa&#xe7;&#xe3;o, Ci&#xea;ncia e Tecnologia de S&#xe3;o Paulo - campus Capivari - v0.9.2"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogoff">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\IFSP\4&#xba; Semestre\Projeto Interdisciplinar\Software\GDS v0.9.1 - Client\imagens\logout.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Logoff"/>
       </Properties>
       <Events>
