@@ -60,7 +60,7 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Descrição", "Qtd. Disponível", "Data de Validade", "Dias Até Vencer"
+                "Descrição", "Qtd. Retirada no Dia", "Data de Retirada", "Data de Validade"
             }
         ) {
             Class[] types = new Class [] {
@@ -95,7 +95,7 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
         btnFiltrar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnFiltrar.setText("Filtrar");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/report.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/reportsaida.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
