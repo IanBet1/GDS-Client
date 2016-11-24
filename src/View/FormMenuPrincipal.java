@@ -173,7 +173,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jLabel3.setText("campus Capivari");
 
         jLabel7.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
-        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v0.9.2");
+        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v0.9.3");
         jLabel7.setToolTipText("");
 
         btnLogoff.setText("Logoff");
