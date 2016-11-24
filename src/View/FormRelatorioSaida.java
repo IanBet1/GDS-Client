@@ -5,22 +5,39 @@
  */
 package View;
 
+import Controller.ControladorRelatorio;
+import Model.Relatorio;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author ianbe
- */
 public class FormRelatorioSaida extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormRelatorios
-     */
+    private final ControladorRelatorio cr;
+
+    private void preencheTabela(List<Relatorio> lista) {
+        if (lista.size() > 0) {
+            DefaultTableModel tabelaSaida = (DefaultTableModel) tblSaida.getModel();
+            tabelaSaida.setNumRows(0);
+            for (Relatorio r : lista) {
+                Object[] obj = new Object[]{
+                    r.getDescricao(),
+                    r.getQtd1(),
+                    r.getDate1(),
+                    r.getDate2()
+                };
+                tabelaSaida.addRow(obj);
+            }
+        }
+    }
+
     public FormRelatorioSaida() {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        this.cr = new ControladorRelatorio();
     }
 
     /**
@@ -34,9 +51,9 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        tblSaida = new javax.swing.JTable();
+        txtDateFim = new com.toedter.calendar.JDateChooser();
+        txtDateInic = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnFiltrar = new javax.swing.JButton();
@@ -51,8 +68,8 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 102, 204));
         jLabel2.setText("RELATÓRIO DE SAÍDA DOS PRODUTOS");
 
-        jTable1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblSaida.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        tblSaida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,12 +95,12 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(tblSaida);
+        if (tblSaida.getColumnModel().getColumnCount() > 0) {
+            tblSaida.getColumnModel().getColumn(0).setResizable(false);
+            tblSaida.getColumnModel().getColumn(1).setResizable(false);
+            tblSaida.getColumnModel().getColumn(2).setResizable(false);
+            tblSaida.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -94,6 +111,11 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
 
         btnFiltrar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/reportsaida.png"))); // NOI18N
 
@@ -109,11 +131,11 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDateInic, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDateFim, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(213, Short.MAX_VALUE))
@@ -135,8 +157,8 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDateInic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDateFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -146,6 +168,37 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        if (validaCampos() == true) {
+            List<Relatorio> lista = this.cr.relatorioSaida(txtDateInic.getDate(), txtDateFim.getDate());
+            preencheTabela(lista);
+        }
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private boolean validaCampos() {
+        String msg = "";
+        boolean teste = true;
+        if (txtDateInic.getDate() == null) {
+            msg = "É necessário preencher o campo de data inicial!\n";
+            teste = false;
+        }
+        if (txtDateFim.getDate() == null) {
+            msg = "É necessário preencher o campo de data final!\n";
+            teste = false;
+        }
+        try {
+            if (txtDateInic.getDate().after(txtDateFim.getDate()) && !txtDateInic.getDate().equals(txtDateFim.getDate())) {
+                msg = "A data de início é maior que a data final!\n";
+                teste = false;
+            }
+        } catch (Exception e) {
+        }
+        if (!"".equals(msg)) {
+            JOptionPane.showMessageDialog(this, msg);
+        }
+        return teste;
+    }
 
     /**
      * @param args the command line arguments
@@ -187,13 +240,13 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltrar;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblSaida;
+    private com.toedter.calendar.JDateChooser txtDateFim;
+    private com.toedter.calendar.JDateChooser txtDateInic;
     // End of variables declaration//GEN-END:variables
 }
