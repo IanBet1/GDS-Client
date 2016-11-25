@@ -26,7 +26,7 @@ public class FormRelatorioSaida extends javax.swing.JFrame {
                     r.getDescricao(),
                     r.getQtd1(),
                     r.getDate1(),
-                    r.getDate2()
+                    r.getQtd2()
                 };
                 tabelaSaida.addRow(obj);
             }

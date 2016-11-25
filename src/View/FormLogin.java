@@ -103,7 +103,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel4.setText("Instituto Federal de Educação, Ciência e Tecnologia de São Paulo");
 
         jLabel5.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
-        jLabel5.setText("Software de Gestão - v0.9.3");
+        jLabel5.setText("Software de Gestão - v0.9.4");
         jLabel5.setToolTipText("");
 
         txtSenha.setMaximumSize(new java.awt.Dimension(136, 27));
