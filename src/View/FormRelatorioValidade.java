@@ -9,9 +9,20 @@ import Controller.ControladorRelatorio;
 import Model.Relatorio;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,6 +31,10 @@ import javax.swing.table.DefaultTableModel;
 public class FormRelatorioValidade extends javax.swing.JFrame {
 
     private final ControladorRelatorio cr;
+
+    private FormRelatorioValidade() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     private void preencheTabela(List<Relatorio> lista) {
         if (lista.size() > 0) {
@@ -37,11 +52,44 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
         }
     }
 
-    public FormRelatorioValidade() {
+    public FormRelatorioValidade(Date datainic, Date datafim, int filtro) {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.cr = new ControladorRelatorio();
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblValidade.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+        tblValidade.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
+        tblValidade.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+        tblValidade.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        txtDateInic.setDate(datainic);
+        txtDateFim.setDate(datafim);
+        if (filtro == 1) {
+            if (validaCampos() == true) {
+            DefaultTableModel dtm = (DefaultTableModel) tblValidade.getModel();
+            dtm.setRowCount(0);
+            List<Relatorio> lista = this.cr.relatorioValidade(txtDateInic.getDate(), txtDateFim.getDate());
+            preencheTabela(lista);
+        }
+        }
+    }
+
+    public void toExcel(JTable table, File file) throws IOException {
+        TableModel model = table.getModel();
+        FileWriter excel = new FileWriter(file);
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            excel.write(model.getColumnName(i) + "\t");
+        }
+        excel.write("\n");
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                excel.write(model.getValueAt(i, j).toString() + "\t");
+            }
+            excel.write("\n");
+        }
+        excel.close();
+        System.out.println("write out to: " + file);
     }
 
     /**
@@ -56,12 +104,13 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblValidade = new javax.swing.JTable();
+        btnFiltrar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btnExport = new javax.swing.JButton();
         txtDateFim = new com.toedter.calendar.JDateChooser();
         txtDateInic = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnFiltrar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GDS - Relatórios");
@@ -76,10 +125,7 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
         tblValidade.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         tblValidade.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Descrição", "Qtd. Disponível", "Data de Validade", "Dias Até Vencer"
@@ -108,14 +154,10 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
             tblValidade.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jLabel1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jLabel1.setText("Data Início:");
-
-        jLabel3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jLabel3.setText("Data Fim:");
-
         btnFiltrar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/filter.png"))); // NOI18N
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.setToolTipText("Procurar produtos com as datas selecionadas");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFiltrarActionPerformed(evt);
@@ -123,6 +165,22 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
         });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/report.png"))); // NOI18N
+
+        btnExport.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/excel.png"))); // NOI18N
+        btnExport.setText("Exportar");
+        btnExport.setToolTipText("Exportar para Excel");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jLabel1.setText("Data Início:");
+
+        jLabel3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jLabel3.setText("Data Fim:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,10 +200,12 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDateFim, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addComponent(btnFiltrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExport)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(93, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(91, 91, 91)
                 .addComponent(jLabel4)
@@ -155,19 +215,23 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(jLabel2)))
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(txtDateInic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtDateFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                        .addComponent(btnFiltrar)
+                        .addComponent(btnExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtDateInic, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDateFim, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -176,10 +240,41 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         if (validaCampos() == true) {
+            DefaultTableModel dtm = (DefaultTableModel) tblValidade.getModel();
+            dtm.setRowCount(0);
             List<Relatorio> lista = this.cr.relatorioValidade(txtDateInic.getDate(), txtDateFim.getDate());
             preencheTabela(lista);
         }
     }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        if (tblValidade.getRowCount() != 0) {
+            JFileChooser fc = new JFileChooser();
+            int option = fc.showSaveDialog(tblValidade);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                String filename = fc.getSelectedFile().getName();
+                String path = fc.getSelectedFile().getParentFile().getPath();
+                int len = filename.length();
+                String ext = "";
+                String file = "";
+                if (len > 4) {
+                    ext = filename.substring(len - 4, len);
+                }
+                if (ext.equals(".xls")) {
+                    file = path + "\\" + filename;
+                } else {
+                    file = path + "\\" + filename + ".xls";
+                }
+                try {
+                    toExcel(tblValidade, new File(file));
+                } catch (IOException ex) {
+                    Logger.getLogger(FormRelatorioValidade.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Tabela vazia!\nImpossível exportar para MS Excel!");
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
 
     private boolean validaCampos() {
         String msg = "";
@@ -242,6 +337,7 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

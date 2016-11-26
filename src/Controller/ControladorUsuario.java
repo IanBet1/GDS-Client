@@ -70,7 +70,7 @@ public class ControladorUsuario {
             clientSocket.close();
             return validado;
         } catch (Exception e) {
-            this.erro = "Erro ao logar no sistema: " + e.getMessage();
+            this.erro = "Erro ao logar no sistema!\nO servidor não foi iniciado!";
             return null;
         }
     }

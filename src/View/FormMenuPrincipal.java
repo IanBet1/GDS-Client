@@ -8,9 +8,15 @@ package View;
 import Controller.ControladorRelatorio;
 import Controller.ControladorUsuario;
 import Model.Usuario;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 
 /**
@@ -36,6 +42,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             Date d = new Date();
             if (this.cr.venceEmSete()) {
                 lblVenceEmSete.setText("Existem produtos à vencer em sete dias.");
+                lblVenceEmSete.setForeground(Color.red);
             } else {
                 lblVenceEmSete.setText("Nenhum produto à vencer em sete dias.");
             }
@@ -71,7 +78,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btnLogoff = new javax.swing.JButton();
         lblVenceEmSete = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GDS - Menu Principal");
@@ -94,7 +100,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         btnCadastroDeProdutos.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 18)); // NOI18N
         btnCadastroDeProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/produtoadd.png"))); // NOI18N
-        btnCadastroDeProdutos.setToolTipText("\n");
+        btnCadastroDeProdutos.setToolTipText("Cadastrar um Novo Produto");
         btnCadastroDeProdutos.setVerifyInputWhenFocusTarget(false);
         btnCadastroDeProdutos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCadastroDeProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +110,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
 
         btnAdicaoProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/produtoaddun.png"))); // NOI18N
+        btnAdicaoProdutos.setToolTipText("Adicionar um Produto");
         btnAdicaoProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicaoProdutosActionPerformed(evt);
@@ -111,6 +118,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
 
         btnCadastroDeUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cadastro.png"))); // NOI18N
+        btnCadastroDeUsuarios.setToolTipText("Cadastro de Usuários");
         btnCadastroDeUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastroDeUsuariosActionPerformed(evt);
@@ -118,6 +126,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
 
         btnRelatorioValidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/report.png"))); // NOI18N
+        btnRelatorioValidade.setToolTipText("Relatório de Validade");
         btnRelatorioValidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelatorioValidadeActionPerformed(evt);
@@ -125,6 +134,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
 
         btnRemocaoProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/produtosubun.png"))); // NOI18N
+        btnRemocaoProdutos.setToolTipText("Remover um Produto");
         btnRemocaoProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemocaoProdutosActionPerformed(evt);
@@ -132,6 +142,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
 
         btnRelatorioSaida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/reportsaida.png"))); // NOI18N
+        btnRelatorioSaida.setToolTipText("Relatório de Saída");
         btnRelatorioSaida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelatorioSaidaActionPerformed(evt);
@@ -189,10 +200,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jLabel3.setText("campus Capivari");
 
         jLabel7.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
-        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v0.9.4.");
-        jLabel7.setToolTipText("");
+        jLabel7.setText("Software de Gerenciamento de Depósito de Suprimentos - Desenvolvido para o Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - campus Capivari - v1.0.0.");
 
-        btnLogoff.setText("Logoff");
+        btnLogoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout.png"))); // NOI18N
+        btnLogoff.setToolTipText("Logout");
         btnLogoff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogoffActionPerformed(evt);
@@ -201,12 +212,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         lblVenceEmSete.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
         lblVenceEmSete.setText("Nenhum produto à vencer em sete dias.");
-        lblVenceEmSete.setToolTipText("");
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        lblVenceEmSete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblVenceEmSeteMouseClicked(evt);
             }
         });
 
@@ -220,20 +228,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                         .addGap(167, 167, 167)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(144, 144, 144)
-                                        .addComponent(jButton1)
-                                        .addGap(116, 116, 116)
-                                        .addComponent(jLabel3))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(74, 74, 74)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(333, 333, 333)
+                                .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogoff, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(74, 74, 74)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogoff, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,17 +257,12 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnLogoff)))
+                        .addComponent(btnLogoff, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(pnlMenuPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblVenceEmSete, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,7 +289,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastroDeUsuariosActionPerformed
 
     private void btnRelatorioValidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioValidadeActionPerformed
-        FormRelatorioValidade relatoriovalidade = new FormRelatorioValidade();
+        FormRelatorioValidade relatoriovalidade = new FormRelatorioValidade(null, null, 0);
         relatoriovalidade.setVisible(true);
     }//GEN-LAST:event_btnRelatorioValidadeActionPerformed
 
@@ -318,18 +315,22 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnLogoffActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Date d = new Date();
-            if (this.cr.venceEmSete()) {
-                lblVenceEmSete.setText("Existem produtos à vencer em sete dias.");
-            } else {
-                lblVenceEmSete.setText("Nenhum produto à vencer em sete dias.");
-            }
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+    private void lblVenceEmSeteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVenceEmSeteMouseClicked
+        if (lblVenceEmSete.getText().equals("Existem produtos à vencer em sete dias.")) {
+            Date datainic = new Date();
+            Date datafim = new Date();
+            // Através do Calendar, trabalhamos a data informada e adicionamos 1 dia nela
+            Calendar c = Calendar.getInstance();
+            c.setTime(datainic);
+            c.add(Calendar.DATE, +7);
+
+            // Obtemos a data alterada
+            datafim = c.getTime();
+
+            FormRelatorioValidade relatoriovalidade = new FormRelatorioValidade(datainic, datafim, 1);
+            relatoriovalidade.setVisible(true);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_lblVenceEmSeteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -374,7 +375,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnRelatorioSaida;
     private javax.swing.JButton btnRelatorioValidade;
     private javax.swing.JButton btnRemocaoProdutos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -11,7 +11,6 @@ import Model.ProdutoDados;
 import Model.Usuario;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,6 +23,7 @@ public class FormRemoverProduto extends javax.swing.JFrame {
 
     private final ControladorProduto cp;
     private final Usuario user;
+    private int validade = 1;
 
     private FormRemoverProduto() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -66,7 +66,7 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         }
         return teste;
     }
-    
+
     private void preencheCmbProdutos() {
         List<Produto> produto = this.cp.preencheCmbBox();
         if (produto.size() > 0) {
@@ -77,11 +77,13 @@ public class FormRemoverProduto extends javax.swing.JFrame {
     }
 
     private void preencheCmbValidade() {
-        cmbValidade.removeAllItems();
-        List<ProdutoDados> produto = this.cp.preencheCmbValidade((Produto) cmbProduto.getSelectedItem());
-        if (produto.size() > 0) {
-            for (ProdutoDados p : produto) {
-                cmbValidade.addItem(p.getDatavalidade());
+        if (this.validade % 2 == 0) {
+            cmbValidade.removeAllItems();
+            List<ProdutoDados> produto = this.cp.preencheCmbValidade((Produto) cmbProduto.getSelectedItem());
+            if (produto.size() > 0) {
+                for (ProdutoDados p : produto) {
+                    cmbValidade.addItem(p.getDatavalidade());
+                }
             }
         }
     }
@@ -149,7 +151,6 @@ public class FormRemoverProduto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GDS - Remoção de Produtos");
-        setMaximumSize(null);
         setMinimumSize(null);
         setResizable(false);
 
@@ -168,7 +169,7 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         jLabel1.setText("Selecione um produto:");
 
         btnRemover.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/add.png"))); // NOI18N
+        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/remover.png"))); // NOI18N
         btnRemover.setText("Remover");
         btnRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +189,7 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         txtDisp.setEnabled(false);
 
         btnChecarQtdDisp.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        btnChecarQtdDisp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/add.png"))); // NOI18N
+        btnChecarQtdDisp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/checkqtd.png"))); // NOI18N
         btnChecarQtdDisp.setText("Checar Quantidade");
         btnChecarQtdDisp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +324,6 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         cmbProduto.setEnabled(true);
         cmbValidade.setEnabled(true);
         txtDataVal.setEnabled(true);
-        txtDataVal.setDate(null);
         txtQtd.setText("");
         txtDisp.setText("");
         btnRemover.setEnabled(false);
@@ -340,7 +340,16 @@ public class FormRemoverProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbValidadeItemStateChanged
 
     private void cmbProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbProdutoItemStateChanged
-        preencheCmbValidade();
+        if (this.validade % 2 == 0) {
+            cmbValidade.removeAllItems();
+            List<ProdutoDados> produto = this.cp.preencheCmbValidade((Produto) cmbProduto.getSelectedItem());
+            if (produto.size() > 0) {
+                for (ProdutoDados p : produto) {
+                    cmbValidade.addItem(p.getDatavalidade());
+                }
+            }
+        }
+        this.validade++;
     }//GEN-LAST:event_cmbProdutoItemStateChanged
 
     /**

@@ -251,8 +251,10 @@ public class ControladorProduto {
                 outToServer2.writeObject(p);
                 produtos = (List<ProdutoDados>) inFromServer2.readObject();
                 this.erro = inFromServer.readUTF();
+                outToServer2.close();
+                inFromServer2.close();
             }
-
+            
             outToServer1.close();
             clientSocket.close();
             return produtos;

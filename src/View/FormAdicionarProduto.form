@@ -138,6 +138,7 @@
           <Image iconType="3" name="/View/add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Adicionar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Adicionar uma nova unidade"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdicionarActionPerformed"/>

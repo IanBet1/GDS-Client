@@ -109,6 +109,7 @@ public class FormAdicionarProduto extends javax.swing.JFrame {
         btnAdicionar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/add.png"))); // NOI18N
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.setToolTipText("Adicionar uma nova unidade");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);

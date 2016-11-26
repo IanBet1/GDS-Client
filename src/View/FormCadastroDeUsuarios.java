@@ -88,6 +88,7 @@ public class FormCadastroDeUsuarios extends javax.swing.JFrame {
         btnCadastrar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/cadastrarusuario.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setToolTipText("Cadastrar novo usuário");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -97,6 +98,7 @@ public class FormCadastroDeUsuarios extends javax.swing.JFrame {
         btnLimpar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/climpar.png"))); // NOI18N
         btnLimpar.setText("Limpar");
+        btnLimpar.setToolTipText("Limpar todos os campos");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparActionPerformed(evt);

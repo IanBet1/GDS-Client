@@ -60,6 +60,7 @@ public class FormLogin extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/login.png"))); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.setToolTipText("Login");
         btnLogin.setMaximumSize(new java.awt.Dimension(138, 29));
         btnLogin.setMinimumSize(new java.awt.Dimension(138, 29));
         btnLogin.setPreferredSize(new java.awt.Dimension(138, 29));
@@ -73,6 +74,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 204));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/GDS - Logo v2.0 - G5_2.png"))); // NOI18N
 
+        txtMatricula.setToolTipText("Matrícula sem o Último Dígito");
         txtMatricula.setMaximumSize(new java.awt.Dimension(136, 27));
         txtMatricula.setMinimumSize(new java.awt.Dimension(136, 27));
         txtMatricula.setPreferredSize(new java.awt.Dimension(136, 27));
@@ -103,9 +105,9 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel4.setText("Instituto Federal de Educação, Ciência e Tecnologia de São Paulo");
 
         jLabel5.setFont(new java.awt.Font("Consolas", 1, 10)); // NOI18N
-        jLabel5.setText("Software de Gestão - v0.9.4");
-        jLabel5.setToolTipText("");
+        jLabel5.setText("Software de Gestão - v1.0.0");
 
+        txtSenha.setToolTipText("Senha");
         txtSenha.setMaximumSize(new java.awt.Dimension(136, 27));
         txtSenha.setMinimumSize(new java.awt.Dimension(136, 27));
         txtSenha.setPreferredSize(new java.awt.Dimension(136, 27));
