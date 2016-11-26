@@ -10,10 +10,6 @@ import Controller.ControladorUsuario;
 import Model.Usuario;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import javax.swing.BorderFactory;
 
@@ -38,7 +34,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         lblNome.setText("Seja bem-vindx, " + user.getNome() + ".");
         try {
             Date d = new Date();
-            if (this.cr.venceEmSete(d, d)) {
+            if (this.cr.venceEmSete()) {
                 lblVenceEmSete.setText("Existem produtos à vencer em sete dias.");
             } else {
                 lblVenceEmSete.setText("Nenhum produto à vencer em sete dias.");
@@ -325,7 +321,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Date d = new Date();
-            if (this.cr.venceEmSete(d, d)) {
+            if (this.cr.venceEmSete()) {
                 lblVenceEmSete.setText("Existem produtos à vencer em sete dias.");
             } else {
                 lblVenceEmSete.setText("Nenhum produto à vencer em sete dias.");

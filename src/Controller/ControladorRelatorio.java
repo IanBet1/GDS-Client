@@ -95,14 +95,8 @@ public class ControladorRelatorio {
         }
     }
     
-    public boolean venceEmSete(Date datainic, Date datafim) {
+    public boolean venceEmSete() {
         boolean validade = false;
-        Relatorio r = new Relatorio();
-        r.setDescricao("");
-        r.setDate1(datainic);
-        r.setDate2(datafim);
-        r.setQtd1(0);
-        r.setQtd2(0);
 
         try (Socket clientSocket = new Socket(this.endereco, 1094)) {
             System.out.println("Cliente solicitando checagem de validade de produtos na porta 1094.");
@@ -110,10 +104,8 @@ public class ControladorRelatorio {
             DataOutputStream outToServer1 = new DataOutputStream(clientSocket.getOutputStream());
             DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
 
-            outToServer1.writeInt(14);
+            outToServer1.writeInt(15);
             if (inFromServer.readBoolean() == true) {
-                ObjectOutputStream outToServer2 = new ObjectOutputStream(clientSocket.getOutputStream());
-                outToServer2.writeObject(r);
                 validade = inFromServer.readBoolean();
                 this.erro = inFromServer.readUTF();
             }
