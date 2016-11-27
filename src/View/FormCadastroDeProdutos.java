@@ -11,9 +11,6 @@ import Model.Usuario;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +31,11 @@ public class FormCadastroDeProdutos extends javax.swing.JFrame {
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.cp = new ControladorProduto();
         this.user = logado;
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("32.png")));
     }
 
     private FormCadastroDeProdutos() {

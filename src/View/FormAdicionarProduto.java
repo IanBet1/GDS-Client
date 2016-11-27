@@ -11,8 +11,6 @@ import Model.ProdutoDados;
 import Model.Usuario;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -70,6 +68,11 @@ public class FormAdicionarProduto extends javax.swing.JFrame {
         this.cp = new ControladorProduto();
         this.user = usuario;
         preencheCmbProdutos();
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("32.png")));
     }
 
     /**

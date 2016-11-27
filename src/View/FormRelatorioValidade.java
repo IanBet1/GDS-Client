@@ -67,12 +67,17 @@ public class FormRelatorioValidade extends javax.swing.JFrame {
         txtDateFim.setDate(datafim);
         if (filtro == 1) {
             if (validaCampos() == true) {
-            DefaultTableModel dtm = (DefaultTableModel) tblValidade.getModel();
-            dtm.setRowCount(0);
-            List<Relatorio> lista = this.cr.relatorioValidade(txtDateInic.getDate(), txtDateFim.getDate());
-            preencheTabela(lista);
+                DefaultTableModel dtm = (DefaultTableModel) tblValidade.getModel();
+                dtm.setRowCount(0);
+                List<Relatorio> lista = this.cr.relatorioValidade(txtDateInic.getDate(), txtDateFim.getDate());
+                preencheTabela(lista);
+            }
         }
-        }
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("32.png")));
     }
 
     public void toExcel(JTable table, File file) throws IOException {

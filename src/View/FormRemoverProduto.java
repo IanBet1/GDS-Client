@@ -122,6 +122,11 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         preencheCmbValidade();
         btnRemover.setEnabled(false);
         btnLimpar.setEnabled(false);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("32.png")));
     }
 
     /**

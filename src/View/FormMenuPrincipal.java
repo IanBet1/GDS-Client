@@ -11,12 +11,8 @@ import Model.Usuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 
 /**
@@ -49,6 +45,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
+        setIcon();
     }
 
     private FormMenuPrincipal() {
@@ -365,6 +362,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                 new FormMenuPrincipal().setVisible(true);
             }
         });
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("32.png")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
