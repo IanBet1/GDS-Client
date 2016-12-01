@@ -123,6 +123,8 @@ public class FormRemoverProduto extends javax.swing.JFrame {
         btnRemover.setEnabled(false);
         btnLimpar.setEnabled(false);
         setIcon();
+        txtDataVal.setVisible(false);
+        jLabel7.setVisible(false);
     }
 
     private void setIcon() {
